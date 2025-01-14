@@ -1,8 +1,9 @@
 #include <Arduino.h>
 #include <utilities/Metro.h>
-#include <config/Pinouts.h>
+#include <config/pinouts.h>
 #include <config/datatypes.h>
 #include <config/definitions.h>
+#include <utilities/utilites.h>
 
 // -------------------------------------------------- //
 // ---------------- GLOBAL VARIABLES ---------------- //
@@ -63,9 +64,9 @@ void loop() {
 void printTask() {
   if (printMetro.check()) {
     change_SwitchMode(get_SwitchCondition(g_pwm5,g_pwm6));
-    Serial.print(g_pwm1);
+    Serial.print(scaleRcSignal(g_pwm1,g_RC_Signal,1)); 
     Serial.print(',');
-    Serial.print(g_pwm3);
+    Serial.print(scaleRcSignal(g_pwm3,g_RC_Signal,3));
     Serial.print(',');
     Serial.print(g_CurrentMode);
     Serial.write(13);
@@ -132,16 +133,16 @@ void change_SwitchMode(SwitchMode desiredMode)
 
 SwitchMode get_SwitchCondition(int pwm5, int pwm6 )
 {
-  if((pwm5 > (CH5_PWM_CENTER + RC_THRESHOLD)) && (pwm6 > (CH6_PWM_CENTER + RC_THRESHOLD)))
+  if((pwm5 > (CH5_PWM_CENTER + RC_THRESHOLD_CH5_CH6)) && (pwm6 > (CH6_PWM_CENTER + RC_THRESHOLD_CH5_CH6)))
   {
     return MODE_DOWN;
   }
-  else if((pwm5 < (CH5_PWM_CENTER - RC_THRESHOLD)) && (pwm6 < (CH6_PWM_CENTER - RC_THRESHOLD)))
+  else if((pwm5 < (CH5_PWM_CENTER - RC_THRESHOLD_CH5_CH6)) && (pwm6 < (CH6_PWM_CENTER - RC_THRESHOLD_CH5_CH6)))
   {
     return MODE_UP;
   }
-  else if((((pwm5 > (CH5_PWM_CENTER - RC_THRESHOLD))) && ((pwm5 < (CH5_PWM_CENTER + RC_THRESHOLD)))) && 
-          (((pwm6 > (CH6_PWM_CENTER - RC_THRESHOLD))) && ((pwm6 < (CH6_PWM_CENTER + RC_THRESHOLD)))))
+  else if((((pwm5 > (CH5_PWM_CENTER - RC_THRESHOLD_CH5_CH6))) && ((pwm5 < (CH5_PWM_CENTER + RC_THRESHOLD_CH5_CH6)))) && 
+          (((pwm6 > (CH6_PWM_CENTER - RC_THRESHOLD_CH5_CH6))) && ((pwm6 < (CH6_PWM_CENTER + RC_THRESHOLD_CH5_CH6)))))
   {
     return MODE_MIDDLE;
   }

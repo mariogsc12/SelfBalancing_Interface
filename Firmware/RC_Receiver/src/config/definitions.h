@@ -1,3 +1,6 @@
+#ifndef DEFINITIONS_H
+#define DEFINITIONS_H
+
 // SERIAL
 #define SERIAL_BAUDRATE 115200
 
@@ -23,6 +26,8 @@
 #define CH5_PWM_MAX 2005
 #define CH6_PWM_MAX 2005
 
-#define RC_THRESHOLD 250
+#define RC_THRESHOLD 25
+#define RC_THRESHOLD_CH5_CH6 250
 
 
+#endif
