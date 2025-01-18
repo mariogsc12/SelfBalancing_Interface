@@ -126,7 +126,7 @@ void change_SwitchMode(SwitchMode desiredMode)
     }
     else
     {
-      g_CurrentMode = MODE_ERROR;
+      g_CurrentMode = MODE_UNKNOWN;
     }
   }
 }
@@ -148,6 +148,6 @@ SwitchMode get_SwitchCondition(int pwm5, int pwm6 )
   }
   else
   {
-    return MODE_ERROR;
+    return MODE_UNKNOWN;
   }
 }
